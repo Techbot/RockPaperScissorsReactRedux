@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 
-require __DIR__ . '/vendor/autoload.php';
+//require '../vendor/autoload.php';
 
 class DefaultController extends Controller
 {
@@ -32,7 +32,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/write/{id}", name="homepage")
+     * @Route("/write/{id}", name="homepage2")
      */
     public function writeToStore()
     {

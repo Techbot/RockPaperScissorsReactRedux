@@ -5,7 +5,7 @@
     "autoload": {
         "psr-4": {
             "": "src/",
- 	    "Battle\\": "src/"
+ 	    "Battle": "src/"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -14,9 +14,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
-            "": "src/",
-            "Battle\\": "src/"
+            "Tests\\": "tests/"
         }
     },
     "require": {
@@ -32,8 +30,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "dbellettini/eventstore-client": "^0.7.0",
         "guzzlehttp/guzzle": "^6.2",
-        "behat/behat": "^3.1",
-        "phpunit/phpunit": "^5.3"
+        "behat/behat": "^3.1"
     },
   "config": {
         "bin-dir": "bin/"

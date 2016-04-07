@@ -5,15 +5,15 @@ module.exports = {
   devtool: 'eval',
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
+  //  'webpack/hot/only-dev-server',
     './index'
   ],
   output: {
     path: __dirname,
-    filename: 'bundle.js'
+    filename: '../../web/scripts/bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+//    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
   module: {
