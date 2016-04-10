@@ -1,0 +1,11 @@
+# behat.yml
+
+default:
+    suites:
+        Dice_features:
+            paths:    [ %paths.base%/features ]
+            contexts: [ DiceContext ]
+
+        PRS_features:
+            paths:    [ %paths.base%/features ]
+            contexts: [ PRSContext ]
