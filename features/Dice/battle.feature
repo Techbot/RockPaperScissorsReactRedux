@@ -6,7 +6,7 @@ Feature: Attack Battle
   Rules :
   - Both players begin with 100 health
   - Both players begin with 10 strength
-  - Each round both players roll one dice and and it to the strenght to make an attack
+  - Each round both players roll one dice and and it to the strentgh to make an attack
   - Player with lower attack  loses health points equal to difference in attack
   - First player whose health = 0 loses
 

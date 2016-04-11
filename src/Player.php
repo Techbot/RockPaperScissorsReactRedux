@@ -40,4 +40,9 @@ class Player
         return $this->strength + $this->dice->rollDice();
     }
 
+    public function choose()
+    {
+        return $this->dice->rollDice();
+    }
+
 }

@@ -49,4 +49,9 @@ class Npc
         $this->strength = $strength;
     }
 
+    public function choose()
+    {
+        return $this->strength + $this->dice->getDiceValue();
+    }
+
 }
