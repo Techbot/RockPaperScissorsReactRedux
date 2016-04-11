@@ -15,11 +15,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-
 //require '../vendor/autoload.php';
 
 class DefaultController extends Controller
 {
+
     /**
      * @Route("/", name="homepage")
      */
@@ -30,7 +30,6 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
         ]);
     }
-
     /**
      * @Route("/write/{id}", name="homepage2")
      */
@@ -45,6 +44,5 @@ class DefaultController extends Controller
         $es->writeToStream('StreamName', $events);
 
         return json_decode('done');
-
     }
 }

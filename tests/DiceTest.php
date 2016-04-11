@@ -19,6 +19,8 @@ class DiceTest extends \PHPUnit_Framework_TestCase
     {
         $game = new \Battle\Dice();
         $roll = $game->rollDice();
-        $this->assertTrue($roll>0);
+        $this->assertTrue($roll>=1);
+        $this->assertTrue($roll<=6);
+
     }
 }
