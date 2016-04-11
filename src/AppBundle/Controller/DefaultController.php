@@ -35,7 +35,7 @@ class DefaultController extends Controller
      */
     public function writeToStore()
     {
-        $es = new EventStore('http://164.138.27.49:2113');
+        $es = new EventStore('http://localhost:2113');
 
         $events = new WritableEventCollection([
             WritableEvent::newInstance('attacked', ['foo' => 'bar']),
