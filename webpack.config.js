@@ -6,11 +6,11 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
   //  'webpack/hot/only-dev-server',
-    './index'
+    './src/WebRoot/Scripts/index.js'
   ],
   output: {
     path: __dirname,
-    filename: '../../web/scripts/bundle.js'
+    filename: 'web/scripts/bundle.js'
   },
   plugins: [
 //    new webpack.HotModuleReplacementPlugin(),
