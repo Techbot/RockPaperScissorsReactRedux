@@ -1,10 +1,21 @@
-var CommentBox = React.createClass({
-    render: function() {
+// React component
+import React from 'react';
+var Comment = React.createClass({
+    rawMarkup: function() {
+        var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
+        return { __html: rawMarkup };
+    },
+
+    render() {
         return (
-            <div className="commentBox">
-                Hello, world! I am a CommentBox.
+            <div className="comment">
+                <h2 className="commentAuthor">
+                    {this.props.author}
+                </h2>
+                <span dangerouslySetInnerHTML={this.rawMarkup()} />
             </div>
         );
     }
 });
 
+export default Comment;

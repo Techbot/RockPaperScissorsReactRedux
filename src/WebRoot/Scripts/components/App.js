@@ -1,8 +1,10 @@
 // React component
 import React from 'react';
-
 import Player from './Player.js';
 import Machine from './Machine.js';
+
+
+
 // React component
 
 var  Counter = React.createClass( {
