@@ -14,6 +14,7 @@ use EventStore\WritableEventCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 //require '../vendor/autoload.php';
 
@@ -30,19 +31,32 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
         ]);
     }
+
     /**
+     * @param Request $request
      * @Route("/write/{id}", name="homepage2")
+     * @return Response
+     * @throws \EventStore\Exception\WrongExpectedVersionException
      */
-    public function writeToStore()
+
+    public function writeToStore(Request $request)
     {
-        $es = new EventStore('http://localhost:2113');
+        $data = (int)$request->query->get('choice');
+
+        $machine = $this->get("stuff");
+
+        $machineChoice = $machine->choice();
+
+        $es = new EventStore('http://164.138.27.49:2113');
 
         $events = new WritableEventCollection([
-            WritableEvent::newInstance('attacked', ['foo' => 'bar']),
-            WritableEvent::newInstance('attacked', ['fizz' => 'buzz']),
-        ]);
-        $es->writeToStream('StreamName', $events);
+            WritableEvent::newInstance('round', ['player' => $data,'machine' => $machineChoice]),
 
-        return json_decode('done');
+
+
+        ]);
+        $es->writeToStream('RockPaperScissors', $events);
+
+        return new Response( json_encode([$data,$machineChoice]));
     }
 }
