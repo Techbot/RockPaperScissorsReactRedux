@@ -2,10 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
-import AppContainer from './components/AppContainer.js';
-
-
-
 import Counter from './components/App.js';
 import * as actions from './actions/index';
 
@@ -26,7 +22,10 @@ $.ajax({
     initialState.player_rocks = result['Player_Rocks'];
     initialState.player_papers = result['Player_Papers'];
     initialState.player_scissors = result['Player_Scissors'];
-    initialState.player_scissors = result['Player_Scissors'];
+    initialState.machine_rocks = result['Machine_Rocks'];
+    initialState.machine_papers = result['Machine_Papers'];
+    initialState.machine_scissors = result['Machine_Scissors'];
+
     initialState.machine = 1;
     initialState.count = 1;
 // Store:
@@ -43,7 +42,12 @@ $.ajax({
 
             player_rocks: state.player_rocks,
             player_papers: state.player_papers,
-            player_scissors: state.player_scissors
+            player_scissors: state.player_scissors,
+
+            machine_rocks: state.machine_rocks,
+            machine_papers: state.machine_papers,
+            machine_scissors: state.machine_scissors
+
         };
     }
 
@@ -83,11 +87,13 @@ function counter(state = initialState
     let machine = state.machine;
     let data4 =state.data4;
 
-
-
     let player_rocks = state.player_rocks;
     let player_papers = state.player_papers;
     let player_scissors = state.player_scissors;
+
+    let machine_rocks = state.machine_rocks;
+    let machine_papers = state.machine_papers;
+    let machine_scissors = state.machine_scissors;
 
 
     switch(action.type){
@@ -106,7 +112,10 @@ function counter(state = initialState
                 data4: data4,
                 player_rocks: state.player_rocks,
                 player_papers: state.player_papers,
-                player_scissors: state.player_scissors
+                player_scissors: state.player_scissors,
+                machine_rocks: state.machine_rocks,
+                machine_papers: state.machine_papers,
+                machine_scissors: state.machine_scissors
             };
 
         case 'compare':
@@ -144,6 +153,26 @@ function counter(state = initialState
                 player_scissors--;
             }
 
+
+            if (machine == 0){
+
+                machine_rocks--;
+
+            }
+
+            if (machine == 1){
+
+                machine_papers--;
+
+            }
+
+            if (machine == 2){
+                machine_scissors--;
+            }
+
+
+
+
             $.ajax({
                 url: "app_dev.php/write/4",
                 data: {choice:count}
@@ -161,7 +190,10 @@ function counter(state = initialState
                 machine: machine,
                 player_rocks: player_rocks,
                 player_papers: player_papers,
-                player_scissors: player_scissors
+                player_scissors: player_scissors,
+                machine_rocks: machine_rocks,
+                machine_papers: machine_papers,
+                machine_scissors: machine_scissors
             };
 
         default:

@@ -27,6 +27,18 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+/*
+        $es = new EventStore('http://164.138.27.49:2113');
+
+        $events = new WritableEventCollection([
+            WritableEvent::newInstance('round', ['player' => 0,'machine' => 0]),
+
+        ]);
+
+        $es->writeToStream('RockPaperScissors', $events);
+*/
+
+
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
