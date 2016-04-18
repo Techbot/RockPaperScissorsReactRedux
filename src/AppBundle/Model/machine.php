@@ -8,7 +8,7 @@ namespace AppBundle\Model;
  * Date: 15/04/2016
  * Time: 11:18
  */
-class stuff
+class machine
 {
 
     public function choice(){
