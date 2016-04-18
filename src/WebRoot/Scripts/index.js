@@ -13,25 +13,20 @@ const increaseAction = {type: 'increase'};
 
 const compareAction = {type:'compare'};
 
-
 $.ajax({
     url: "http://164.138.27.49:2113/projection/five/state",
 
 }).done(function(result) {
-
     initialState.player_rocks = result['Player_Rocks'];
     initialState.player_papers = result['Player_Papers'];
     initialState.player_scissors = result['Player_Scissors'];
     initialState.machine_rocks = result['Machine_Rocks'];
     initialState.machine_papers = result['Machine_Papers'];
     initialState.machine_scissors = result['Machine_Scissors'];
-
     initialState.machine = 1;
     initialState.count = 1;
 // Store:
     let store = createStore(counter);
-
-
 
 // Map Redux state to component props
     function mapStateToProps(state)  {
@@ -47,7 +42,6 @@ $.ajax({
             machine_rocks: state.machine_rocks,
             machine_papers: state.machine_papers,
             machine_scissors: state.machine_scissors
-
         };
     }
 
@@ -57,7 +51,6 @@ $.ajax({
             onIncreaseClick: () => dispatch(increaseAction),
             onCompareStates: () => dispatch(compareAction)
         }
-
     }
 
 // Connected Component:
@@ -72,10 +65,6 @@ $.ajax({
         </Provider>,
         document.getElementById('root')
     );
-
-
-
-
 });
 
 // Reducer:
@@ -94,7 +83,6 @@ function counter(state = initialState
     let machine_rocks = state.machine_rocks;
     let machine_papers = state.machine_papers;
     let machine_scissors = state.machine_scissors;
-
 
     switch(action.type){
 
@@ -122,11 +110,9 @@ function counter(state = initialState
 
             if (count>machine || (count==0&&machine==2)){
                 score++;
-
             }
             if (count<machine || (machine==0&&count==2)){
                 score--;
-
             }
 
             if (count==machine) {
@@ -140,13 +126,11 @@ function counter(state = initialState
             if (count == 0){
 
                 player_rocks--;
-
             }
 
             if (count == 1){
 
                 player_papers--;
-
             }
 
             if (count == 2){
@@ -155,33 +139,22 @@ function counter(state = initialState
 
 
             if (machine == 0){
-
                 machine_rocks--;
-
             }
 
             if (machine == 1){
-
                 machine_papers--;
-
             }
 
             if (machine == 2){
                 machine_scissors--;
             }
 
-
-
-
             $.ajax({
                 url: "app_dev.php/write/4",
                 data: {choice:count}
             }).done(function(result) {
-
                 machine = result[1];
-
-
-
             });
 
             return {
@@ -195,7 +168,6 @@ function counter(state = initialState
                 machine_papers: machine_papers,
                 machine_scissors: machine_scissors
             };
-
         default:
             return state;
     }
