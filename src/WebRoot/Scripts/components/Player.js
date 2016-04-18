@@ -8,9 +8,9 @@ var Player = React.createClass( {
 
 
         return (
-            <div>
+            <div id = "player_class" className="col-lg-4">
             <span>Player</span><br/>
-                <span>Number of Rocks</span>   <span>{player_rocks}</span><br/>
+                <span id='stuff'>Number of Rocks</span>   <span>{player_rocks}</span><br/>
                 <span>Number of Papers</span>   <span>{player_papers}</span><br/>
                 <span>Number of Scissors</span> <span>{player_scissors}</span><br/>
                 <br/>
