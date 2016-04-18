@@ -8,6 +8,7 @@ namespace AppBundle\Controller;
  * Time: 08:46
  */
 
+use Battle\Game;
 use EventStore\EventStore;
 use EventStore\WritableEvent;
 use EventStore\WritableEventCollection;
@@ -41,22 +42,20 @@ class DefaultController extends Controller
 
     public function writeToStore(Request $request)
     {
-        $data = (int)$request->query->get('choice');
+        $playerChoice = (int)$request->query->get('choice');
 
-        $machine = $this->get("stuff");
+        $game = new Game();
 
-        $machineChoice = $machine->choice();
+        $game->get_round($playerChoice);
 
         $es = new EventStore('http://164.138.27.49:2113');
 
         $events = new WritableEventCollection([
-            WritableEvent::newInstance('round', ['player' => $data,'machine' => $machineChoice]),
-
-
+            WritableEvent::newInstance('round', ['player' => $playerChoice,'machine' => $this->machineChoice]),
 
         ]);
         $es->writeToStream('RockPaperScissors', $events);
 
-        return new Response( json_encode([$data,$machineChoice]));
+        return new Response( json_encode([$playerChoice,$this->machineChoice]));
     }
 }

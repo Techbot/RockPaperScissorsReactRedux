@@ -12,9 +12,9 @@ class Npc
     private $dice;
     private $health;
 
-    public function __construct(Dice $dice)
+    public function __construct()
     {
-        $this->dice = $dice;
+        $this->dice = new Dice();
         $this->health = 100;
         $this->strength = 10;
     }

@@ -120,16 +120,13 @@ function counter(state = initialState
 
             }
 
-            if (count==machine){
+            if (count==machine) {
 
             }
 
             // new state
             //machine = Math.floor(Math.random()*3);
             //var messages = ['Rock','Paper','Scissors'];
-
-
-
 
             if (count == 0){
 

@@ -5,15 +5,17 @@ class Player
     private $strength;
     private $health;
     private $dice;
-    private $npc;
+    public $choice;
+
     private $npcAttack;
 
-    public function __construct(Dice $dice, $npc)
+    public function __construct()
     {
-        $this->npc      = $npc;
-        $this->dice     = $dice;
+
+        $this->dice     = new Dice();
         $this->health   = 100;
         $this->strenght = 10;
+        $this->choice   = 0;
     }
 
     public function addToStrength($dice)

@@ -12,31 +12,36 @@ Feature: Rock Paper Scissors Battle
   - First player whose health = 0 loses
 
   Scenario: Player attack is greater than NPC attack
-    Given NPC chose 1
+    Given a new Game
     When I chose 2
+    And NPC chose 1
     And NPC health is 100
     Then NPC health should be reduced to 90
 
   Scenario: Player attack is less than NPC attack
-    Given NPC chose 1
+    Given a new Game
     When I chose 0
+    And NPC chose 1
     And my health is 100
     Then my health should be reduced to 90
 
   Scenario: Player attack is equal than NPC attack
-    Given NPC chose 1
+    Given a new Game
     When I chose 0
+    And NPC chose 0
     And NPC has health of 100
     Then NPC health should be 100
 
   Scenario: Player attack is 0  and NPC attack is 2
-    Given NPC chose 2
+    Given a new Game
     When I chose 0
+    And NPC chose 2
     And NPC has health of 100
     Then NPC health should be 90
 
   Scenario: Player attack is 2  and NPC attack is 1
-    Given NPC chose 0
+    Given a new Game
     When I chose 2
+    And NPC chose 0
     And I have health of 100
     Then my health should be 90

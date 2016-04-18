@@ -20,15 +20,28 @@ class PRSContext implements Context, SnippetAcceptingContext
     private $dice;
     private $dice2;
     private $diff;
+    private $game;
 
     public function __construct()
     {
 
         $this->dice = new Dice();
         $this->dice2 = new Dice();
-        $this->npc = new Npc($this->dice2);
-        $this->player = new Player($this->dice, $this->npc);
+        $this->npc = new Npc();
+        $this->player = new Player();
     }
+
+    /**
+     * @Given a new Game
+     */
+    public function aNewGame()
+    {
+       $this->game = new \Battle\Game();
+    }
+
+
+
+
 
 
     /**
@@ -55,23 +68,19 @@ class PRSContext implements Context, SnippetAcceptingContext
         return  $this->npc->getHealth();
     }
 
-
-
-
-
     /**
-     * @Then NPC health should be reduced to :arg1
+     * @Then NPC health should be reduced to :health
      */
-    public function npcHealthShouldBeReducedTo($arg1)
+    public function npcHealthShouldBeReducedTo($health)
     {
 
-        $this->npc->setHealth($arg1);
-        return ;
+        $this->npc->setHealth($this->npc->getHealth() - 10);
+
+        Assert::assertEquals($health, $this->npc->getHealth());
 
 
 
     }
-
 
     /**
      * @When my health is :arg1
@@ -82,11 +91,12 @@ class PRSContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then my health should be reduced to :arg1
+     * @Then my health should be reduced to :health
      */
-    public function myHealthShouldBeReducedTo($arg1)
+    public function myHealthShouldBeReducedTo($health)
     {
-        $this->player->getHealth($arg1);
+        $this->player->setHealth($this->player->getHealth() -10 );
+        Assert::assertEquals($health, $this->player->getHealth());
     }
 
     /**
@@ -98,11 +108,15 @@ class PRSContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then NPC health should be :arg1
+     * @Then NPC health should be :health
      */
-    public function npcHealthShouldBe($arg1)
+    public function npcHealthShouldBe($health)
     {
-        $this->npc->getHealth($arg1);
+
+        Assert::assertEquals($health, $this->npc->getHealth());
+
+
+
     }
 
     /**
