@@ -9,7 +9,7 @@ var Machine = React.createClass( {
 
         return (
             <div>
-            <div class="col-lg-4">
+            <div className="col-lg-4">
                 <span>Machine</span><br/>
                 <div>Number of Rocks</div>   <span>{machine_rocks}</span><br/>
                 <div>Number of Papers</div>   <span>{machine_papers}</span><br/>

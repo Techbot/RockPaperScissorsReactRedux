@@ -7,11 +7,23 @@ import Machine from './Machine.js';
 
 var Counter = React.createClass( {
     render(){
-        const { value, totalScore, machine_rocks,machine_papers,machine_scissors,machineChoice, onCompareStates, onIncreaseClick,data, player_rocks, player_papers , player_scissors} = this.props;
+        const { value,
+            totalScore,
+            machine_rocks,
+            machine_papers,
+            machine_scissors,
+            machineChoice,
+            onCompareStates,
+            onIncreaseClick,
+            data,
+            player_rocks,
+            player_papers,
+            player_scissors
+            } = this.props;
 
          return (
             <span>
-                <div>git
+                <div>
                 <span>Player:{value}</span> <span>Computer:{machineChoice}</span>   <span>Score:{totalScore}</span>
                 <button onClick={onIncreaseClick}>Increase</button>
                 <button onClick={onCompareStates}>Submit</button>

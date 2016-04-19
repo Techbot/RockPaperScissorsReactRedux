@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
+    public $machineChoice;
 
     /**
      * @Route("/", name="homepage")
@@ -37,8 +38,6 @@ class DefaultController extends Controller
 
         $es->writeToStream('RockPaperScissors', $events);
 */
-
-
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
@@ -58,7 +57,7 @@ class DefaultController extends Controller
 
         $game = new Game();
 
-        $game->get_round($playerChoice);
+        $this->machineChoice = $game->get_round($playerChoice)[1];
 
         $es = new EventStore('http://164.138.27.49:2113');
 

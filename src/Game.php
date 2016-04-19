@@ -16,10 +16,14 @@ class Game
 
     function __construct()
     {
-        $this->player = new Player;
+        $this->player = new Player();
         $this->npc = new Npc();
     }
 
+    /**
+     * @param $playerChoice
+     * @return array
+     */
     public function get_round($playerChoice)
     {
         $this->player->choice = $playerChoice;
@@ -29,7 +33,7 @@ class Game
 
             $this->npc->setHealth($this->npc->getHealth() - 10);
 
-            return 'win';
+            return ['win',$this->machineChoice];
 
         }
 
@@ -37,7 +41,7 @@ class Game
 
             $this->player->setHealth($this->player->getHealth() - 10);
 
-            return 'lose';
+            return ['lose',$this->machineChoice];
 
         }
 
