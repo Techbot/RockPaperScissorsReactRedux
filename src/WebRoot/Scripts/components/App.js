@@ -8,6 +8,7 @@ import Machine from './Machine.js';
 var Counter = React.createClass( {
     render(){
         const { value,
+            value2,
             totalScore,
             machine_rocks,
             machine_papers,
@@ -24,14 +25,16 @@ var Counter = React.createClass( {
          return (
             <span>
                 <div>
-                <span>Player:{value}</span> <span>Computer:{machineChoice}</span>   <span>Score:{totalScore}</span>
-                <button onClick={onIncreaseClick}>Increase</button>
-                <button onClick={onCompareStates}>Submit</button>
+                    <span>Player:{value}</span>
+                    <span>Computer:{value2}</span>
+
+                    <span>Score:{totalScore}</span>
+                    <button onClick={onIncreaseClick}>Increase</button>
+                    <button onClick={onCompareStates}>Submit</button>
                 </div>
                 <Player player_rocks={player_rocks} player_papers={player_papers} player_scissors={player_scissors}/>
                 <Machine machine_rocks={machine_rocks} machine_papers={machine_papers} machine_scissors={machine_scissors}/>
-
-          </span>
+            </span>
         );
     }
 });

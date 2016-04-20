@@ -6,4 +6,6 @@
 // Action:
 export const increaseAction = {type: 'increase'};
 
-export const compareAction = {type:'compare'};
+export function compareAction(data) {
+    return {type: 'compare', data: data};
+}

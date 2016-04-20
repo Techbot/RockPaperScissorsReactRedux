@@ -51,7 +51,7 @@ class Npc
 
     public function choose()
     {
-        return $this->strength + $this->dice->getDiceValue();
+        return rand(1,3);
     }
 
 }

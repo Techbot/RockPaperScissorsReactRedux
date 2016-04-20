@@ -12,7 +12,7 @@ class Game
 {
     private $player;
     private $npc;
-    private $machineChoice;
+    private $machineChoice=1;
 
     function __construct()
     {
@@ -33,17 +33,13 @@ class Game
 
             $this->npc->setHealth($this->npc->getHealth() - 10);
 
-            return ['win',$this->machineChoice];
-
         }
 
         if (  $this->player->choice < $this->machineChoice) {
 
             $this->player->setHealth($this->player->getHealth() - 10);
 
-            return ['lose',$this->machineChoice];
-
         }
-
+        return $this->machineChoice;
     }
 }

@@ -46,7 +46,7 @@ class DefaultController extends Controller
 
     /**
      * @param Request $request
-     * @Route("/write/{id}", name="homepage2")
+     * @Route("/round", name="homepage2")
      * @return Response
      * @throws \EventStore\Exception\WrongExpectedVersionException
      */
@@ -57,7 +57,12 @@ class DefaultController extends Controller
 
         $game = new Game();
 
-        $this->machineChoice = $game->get_round($playerChoice)[1];
+        $this->machineChoice = $game->get_round($playerChoice);
+
+     //   print_r($game->get_round($playerChoice));
+
+
+
 
         $es = new EventStore('http://164.138.27.49:2113');
 
@@ -67,6 +72,6 @@ class DefaultController extends Controller
         ]);
         $es->writeToStream('RockPaperScissors', $events);
 
-        return new Response( json_encode([$playerChoice,$this->machineChoice]));
+        return new Response( json_encode([$this->machineChoice,$playerChoice]));
     }
 }

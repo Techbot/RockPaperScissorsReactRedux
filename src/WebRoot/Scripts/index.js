@@ -8,6 +8,10 @@ import * as actions from './actions/index';
 var messages = ['Rock','Paper','Scissors'];
 const initialState ={};
 
+var machineChoice;
+var count;
+
+
 // Action:
 const increaseAction = {type: 'increase'};
 
@@ -23,8 +27,11 @@ $.ajax({
     initialState.machine_rocks = result['Machine_Rocks'];
     initialState.machine_papers = result['Machine_Papers'];
     initialState.machine_scissors = result['Machine_Scissors'];
-    initialState.machine = 1;
+    initialState.machineChoice = 1;
     initialState.count = 1;
+
+
+
 // Store:
     let store = createStore(counter);
 
@@ -32,7 +39,8 @@ $.ajax({
     function mapStateToProps(state)  {
         return {
             value: messages[state.count],
-            machineChoice: messages[state.machine],
+            value2:messages[state.machineChoice],
+            machineChoice: state.machineChoice,
             totalScore: state.score,
 
             player_rocks: state.player_rocks,
@@ -41,15 +49,31 @@ $.ajax({
 
             machine_rocks: state.machine_rocks,
             machine_papers: state.machine_papers,
-            machine_scissors: state.machine_scissors
+            machine_scissors: state.machine_scissors,
+
         };
     }
 
 // Map Redux actions to component props
     function mapDispatchToProps(dispatch) {
         return {
+
             onIncreaseClick: () => dispatch(increaseAction),
-            onCompareStates: () => dispatch(compareAction)
+            onCompareStates: () => {
+
+                $.ajax({
+                    url: "app_dev.php/round",
+                    data: {choice:count}
+                }).done(function(result) {
+
+                    machineChoice = JSON.parse(result)[0];
+
+                    console.log (JSON.parse(result)[0] ,count );
+                });
+
+                dispatch(compareAction)
+
+            }
         }
     }
 
@@ -73,7 +97,7 @@ function counter(state = initialState
 
     let count = state.count;
     let score = state.score;
-    let machine = state.machine;
+    let machineChoice = state.machineChoice;
     let data4 =state.data4;
 
     let player_rocks = state.player_rocks;
@@ -96,7 +120,7 @@ function counter(state = initialState
             return {
                 count: count,
                 score: score,
-                machine: machine,
+                machineChoice: machineChoice,
                 data4: data4,
                 player_rocks: state.player_rocks,
                 player_papers: state.player_papers,
@@ -108,14 +132,18 @@ function counter(state = initialState
 
         case 'compare':
 
-            if (count>machine || (count==0&&machine==2)){
+
+
+
+
+            if (count>machineChoice || (count==0&&machineChoice==2)){
                 score++;
             }
-            if (count<machine || (machine==0&&count==2)){
+            if (count<machineChoice || (machineChoice==0&&count==2)){
                 score--;
             }
 
-            if (count==machine) {
+            if (count==machineChoice) {
 
             }
 
@@ -137,30 +165,23 @@ function counter(state = initialState
                 player_scissors--;
             }
 
-
-            if (machine == 0){
+            if (machineChoice == 0){
                 machine_rocks--;
             }
 
-            if (machine == 1){
+            if (machineChoice == 1){
                 machine_papers--;
             }
 
-            if (machine == 2){
+            if (machineChoice == 2){
                 machine_scissors--;
             }
 
-            $.ajax({
-                url: "app_dev.php/write/4",
-                data: {choice:count}
-            }).done(function(result) {
-                machine = result[1];
-            });
 
             return {
                 count: count,
                 score: score,
-                machine: machine,
+                machineChoice: machineChoice,
                 player_rocks: player_rocks,
                 player_papers: player_papers,
                 player_scissors: player_scissors,
@@ -168,6 +189,10 @@ function counter(state = initialState
                 machine_papers: machine_papers,
                 machine_scissors: machine_scissors
             };
+
+
+
+
         default:
             return state;
     }
