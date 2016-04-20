@@ -24,14 +24,21 @@ var Counter = React.createClass( {
 
          return (
             <span>
-                <div>
+                <div id = "player" className="col-lg-4">
                     <span>Player:{value}</span>
+
+                </div>
+                <button onClick={onIncreaseClick}>Increase</button>
+                 <div id = "computer" className="col-lg-4">
                     <span>Computer:{value2}</span>
+                 </div>
+
 
                     <span>Score:{totalScore}</span>
-                    <button onClick={onIncreaseClick}>Increase</button>
+
                     <button onClick={onCompareStates}>Submit</button>
-                </div>
+
+
                 <Player player_rocks={player_rocks} player_papers={player_papers} player_scissors={player_scissors}/>
                 <Machine machine_rocks={machine_rocks} machine_papers={machine_papers} machine_scissors={machine_scissors}/>
             </span>

@@ -8,17 +8,14 @@ import * as actions from './actions/index';
 var messages = ['Rock','Paper','Scissors'];
 const initialState ={};
 
-var machineChoice;
-var count;
-
-
+var machineChoice=0;
+var myChoice=1;
 // Action:
-const increaseAction = {type: 'increase'};
-
-const compareAction = {type:'compare'};
+var increaseAction = {type: 'increase'};
+var compareAction ={type: 'compare',machineChoice:machineChoice};
 
 $.ajax({
-    url: "http://164.138.27.49:2113/projection/five/state",
+    url: "http://164.138.27.49:2113/projection/five/state"
 
 }).done(function(result) {
     initialState.player_rocks = result['Player_Rocks'];
@@ -27,57 +24,47 @@ $.ajax({
     initialState.machine_rocks = result['Machine_Rocks'];
     initialState.machine_papers = result['Machine_Papers'];
     initialState.machine_scissors = result['Machine_Scissors'];
-    initialState.machineChoice = 1;
-    initialState.count = 1;
-
-
-
+    initialState.machineChoice = machineChoice;
+    initialState.myChoice = 1;
 // Store:
     let store = createStore(counter);
 
 // Map Redux state to component props
     function mapStateToProps(state)  {
         return {
-            value: messages[state.count],
+            value: messages[state.myChoice],
             value2:messages[state.machineChoice],
             machineChoice: state.machineChoice,
             totalScore: state.score,
-
             player_rocks: state.player_rocks,
             player_papers: state.player_papers,
             player_scissors: state.player_scissors,
-
             machine_rocks: state.machine_rocks,
             machine_papers: state.machine_papers,
             machine_scissors: state.machine_scissors,
-
         };
     }
 
 // Map Redux actions to component props
     function mapDispatchToProps(dispatch) {
         return {
-
             onIncreaseClick: () => dispatch(increaseAction),
             onCompareStates: () => {
 
                 $.ajax({
                     url: "app_dev.php/round",
-                    data: {choice:count}
+                    data: {choice:myChoice}
                 }).done(function(result) {
-
                     machineChoice = JSON.parse(result)[0];
-
-                    console.log (JSON.parse(result)[0] ,count );
+                    console.log (JSON.parse(result)[0] ,myChoice );
                 });
-
                 dispatch(compareAction)
-
             }
         }
     }
 
 // Connected Component:
+
     let App = connect(
         mapStateToProps,
         mapDispatchToProps
@@ -95,15 +82,13 @@ $.ajax({
 function counter(state = initialState
     , action) {
 
-    let count = state.count;
-    let score = state.score;
-    let machineChoice = state.machineChoice;
-    let data4 =state.data4;
+    myChoice = state.myChoice;
 
+    let score = state.score;
+    let data4 =state.data4;
     let player_rocks = state.player_rocks;
     let player_papers = state.player_papers;
     let player_scissors = state.player_scissors;
-
     let machine_rocks = state.machine_rocks;
     let machine_papers = state.machine_papers;
     let machine_scissors = state.machine_scissors;
@@ -112,15 +97,15 @@ function counter(state = initialState
 
         case 'increase':
 
-            count++;
-            if (count>2){
-                count=0;
+            myChoice++;
+            if (myChoice>2){
+                myChoice=0;
             }
 
             return {
-                count: count,
+                myChoice: myChoice,
                 score: score,
-                machineChoice: machineChoice,
+                machineChoice: state.machineChoice,
                 data4: data4,
                 player_rocks: state.player_rocks,
                 player_papers: state.player_papers,
@@ -132,18 +117,16 @@ function counter(state = initialState
 
         case 'compare':
 
+            console.log(machineChoice);
 
-
-
-
-            if (count>machineChoice || (count==0&&machineChoice==2)){
+           if (myChoice>machineChoice || (myChoice==0&&machineChoice==2)){
                 score++;
             }
-            if (count<machineChoice || (machineChoice==0&&count==2)){
+            if (myChoice<machineChoice || (machineChoice==0&&myChoice==2)){
                 score--;
             }
 
-            if (count==machineChoice) {
+            if (myChoice==machineChoice) {
 
             }
 
@@ -151,17 +134,17 @@ function counter(state = initialState
             //machine = Math.floor(Math.random()*3);
             //var messages = ['Rock','Paper','Scissors'];
 
-            if (count == 0){
+            if (myChoice == 0){
 
                 player_rocks--;
             }
 
-            if (count == 1){
+            if (myChoice == 1){
 
                 player_papers--;
             }
 
-            if (count == 2){
+            if (myChoice == 2){
                 player_scissors--;
             }
 
@@ -177,9 +160,8 @@ function counter(state = initialState
                 machine_scissors--;
             }
 
-
             return {
-                count: count,
+                myChoice: myChoice,
                 score: score,
                 machineChoice: machineChoice,
                 player_rocks: player_rocks,
@@ -189,9 +171,6 @@ function counter(state = initialState
                 machine_papers: machine_papers,
                 machine_scissors: machine_scissors
             };
-
-
-
 
         default:
             return state;
