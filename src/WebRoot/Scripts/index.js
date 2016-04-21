@@ -130,10 +130,6 @@ function counter(state = initialState
 
             }
 
-            // new state
-            //machine = Math.floor(Math.random()*3);
-            //var messages = ['Rock','Paper','Scissors'];
-
             if (myChoice == 0){
 
                 player_rocks--;
