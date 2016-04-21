@@ -128,6 +128,8 @@ function counter(state = initialState
 
             if (myChoice==machineChoice) {
 
+                //do nothing yet
+
             }
 
             if (myChoice == 0){
