@@ -1,7 +1,7 @@
 ---
 - name: Hello Ansible - quick start
-  hosts: myvirtualhost-ubuntu
-  user: ubuntu
+  hosts: example_servers
+  user: root
   sudo: yes
 
   tasks:
