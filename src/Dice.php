@@ -14,6 +14,11 @@ class Dice
         return rand(1,6);
     }
 
+
+    
+
+
+
     public function getDiceValue()
     {
         return rand(1,6);
