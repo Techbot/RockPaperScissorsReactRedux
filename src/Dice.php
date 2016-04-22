@@ -21,6 +21,4 @@ class Dice
         return rand(1,6);
 
     }
-
-
 }
