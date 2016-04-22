@@ -1,0 +1,9 @@
+---
+- name: Hello Ansible - quick start
+  hosts: myvirtualhost-ubuntu
+  user: ubuntu
+  sudo: yes
+
+  tasks:
+    - name: Hello server
+      shell: date >> now.txt
