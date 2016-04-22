@@ -1,6 +1,6 @@
 ---
 - name: Hello Ansible - quick start
-  hosts: example_servers
+  hosts: thing
   user: root
   sudo: yes
 
