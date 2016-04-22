@@ -9,16 +9,17 @@ namespace Battle;
 
 class Dice
 {
+    /**
+     * @return int
+     */
     public function rollDice()
     {
         return rand(1,6);
     }
 
-
-    
-
-
-
+    /**
+     * @return int
+     */
     public function getDiceValue()
     {
         return rand(1,6);
