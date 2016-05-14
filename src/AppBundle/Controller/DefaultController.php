@@ -61,10 +61,7 @@ class DefaultController extends Controller
 
      //   print_r($game->get_round($playerChoice));
 
-
-
-
-        $es = new EventStore('http://164.138.27.49:2113');
+        $es = new EventStore('http://46.19.33.139:2113');
 
         $events = new WritableEventCollection([
             WritableEvent::newInstance('round', ['player' => $playerChoice,'machine' => $this->machineChoice]),

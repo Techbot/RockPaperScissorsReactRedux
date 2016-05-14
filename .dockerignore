@@ -1,0 +1,8 @@
+/tests
+/app/config/config.yml
+/.dockerignore
+/var/sessions/dev
+/var/logs/dev.log
+/var/cache/dev
+/features
+/app/config/parameters.yml

@@ -27,7 +27,7 @@ class Game
     public function get_round($playerChoice)
     {
         $this->player->choice = $playerChoice;
-        $this->machineChoice = $this->npc->choose();
+        $this->machineChoice  = $this->npc->choose();
 
         if (  $this->player->choice > $this->machineChoice){
 
