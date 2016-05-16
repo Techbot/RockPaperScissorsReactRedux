@@ -9,14 +9,14 @@ var webpack = require('webpack-stream');
 /*
 gulp.task('site-copy-fonts', function() {
     gulp.src('bower_components/fontawesome/fonts/*')
-        .pipe(gulp.dest('web/fonts/'));
+        .pipe(gulp.dest('html/fonts/'));
 });
 */
 
 /*
 gulp.task('site-copy-scripts', function() {
     gulp.src('src/Site/Webroot/Scripts/*')
-        .pipe(gulp.dest('web/scripts/'));
+        .pipe(gulp.dest('html/scripts/'));
 });
 
 gulp.task('site-design', function() {
@@ -31,7 +31,7 @@ gulp.task('site-design', function() {
         //   .pipe(less())
         .pipe(concat('style.css'))
         //   .pipe(cssmin())
-        .pipe(gulp.dest('web/styles/'));
+        .pipe(gulp.dest('html/styles/'));
 });
 
 gulp.task('site-scripts', function() {
@@ -43,7 +43,7 @@ gulp.task('site-scripts', function() {
         ])
         .pipe(concat('scripts.js'))
         //  .pipe(uglify())
-        .pipe(gulp.dest('web/scripts/'));
+        .pipe(gulp.dest('html/scripts/'));
 });
 */
 
@@ -52,7 +52,7 @@ gulp.task('site-scripts', function() {
 gulp.task('default', function() {
     return gulp.src('src/webroot/index.js')
         .pipe(webpack( require('./webpack.config.js') ))
-        .pipe(gulp.dest('web/scripts'));
+        .pipe(gulp.dest('html/scripts'));
 });
 
 

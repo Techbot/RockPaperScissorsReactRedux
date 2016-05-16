@@ -1,20 +1,7 @@
-# EventStore (geteventstore.com)
-#
-# VERSION               0.0.3
-
-FROM      ubuntu:14.04.2
-MAINTAINER Techbot <djtechbot@gmail.com>
-
-RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
-
-USER root
-RUN mkdir -p /tmp2
-COPY *.* /tmp2/
-
-EXPOSE 2113
-EXPOSE 1113
-
-VOLUME /data
-
-
-
+FROM php:7-apache
+COPY html   /var/www/html
+COPY src    /var/www/src
+COPY app    /var/www/app
+COPY bin    /var/www/bin
+COPY var    /var/www/var
+COPY vendor /var/www/vendor
