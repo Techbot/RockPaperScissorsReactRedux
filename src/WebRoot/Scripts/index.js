@@ -15,7 +15,7 @@ var increaseAction = {type: 'increase'};
 var compareAction ={type: 'compare',machineChoice:machineChoice};
 
 $.ajax({
-    url: "http://164.138.27.49:2113/projection/five/state"
+    url: "http://46.19.33.139:2113/projection/five/state"
 
 }).done(function(result) {
     initialState.player_rocks = result['Player_Rocks'];
