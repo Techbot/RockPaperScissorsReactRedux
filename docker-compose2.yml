@@ -1,0 +1,46 @@
+version: '2'
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+      - "./html:/var/www/html"
+      - "./src:/var/www/src"
+      - "./app:/var/www/app"
+      - "./bin:/var/www/bin"
+      - "./var:/var/www/var"
+      - "./vendor:/var/www/vendor"
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+  web:
+    build: .
+    ports:
+    - "5000:5000"
+    volumes:
+    - .:/code
+    - logvolume01:/var/log
+    links:
+    - eventstore
+    - php7
+    - mysql
+    - phpmyadmin
+  eventstore:
+    image: techbot/docker-event
+    ports:
+    - "2113:2113"
+  php7:
+    image: coderstephen/php7
+    ports:
+    - "80:80"
+  mysql:
+    image: mysql
+    ports:
+    - "3306:3306"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+
+volumes:
+  logvolume01: {}

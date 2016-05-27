@@ -52,7 +52,7 @@ gulp.task('site-scripts', function() {
 gulp.task('default', function() {
     return gulp.src('src/webroot/index.js')
         .pipe(webpack( require('./webpack.config.js') ))
-        .pipe(gulp.dest('html/scripts'));
+        .pipe(gulp.dest('./'));
 });
 
 

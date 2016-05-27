@@ -29,7 +29,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
 /*
-        $es = new EventStore('http://164.138.27.49:2113');
+        $es = new EventStore('http://46.19.33.139:2113');
 
         $events = new WritableEventCollection([
             WritableEvent::newInstance('round', ['player' => 0,'machine' => 0]),

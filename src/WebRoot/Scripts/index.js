@@ -52,7 +52,7 @@ $.ajax({
             onCompareStates: () => {
 
                 $.ajax({
-                    url: "app_dev.php/round",
+                    url: "round",
                     data: {choice:myChoice}
                 }).done(function(result) {
                     machineChoice = JSON.parse(result)[0];
