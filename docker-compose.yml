@@ -1,44 +1,31 @@
 version: '2'
 services:
-
   db:
-    image: mysql:5.7
-    volumes:
-      - "./.data/db:/var/lib/mysql"
-    restart: always
+    image: techbot/mysql
+    ports:
+    - "3306:3306"
+    links:
+      - web
     environment:
       MYSQL_ROOT_PASSWORD: wordpress
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
-    ports:
-      - "3306:3306"
-    links:
-      - php
-      - web
   web:
-    image: nginx:latest
+    image: techbot/rock-paper-scissors-react-redux
     ports:
-          - "80:80"
-    volumes:
-            - "./html:/var/www/html"
-            - "./src:/var/www/src"
-            - "./app:/var/www/app"
-            - "./bin:/var/www/bin"
-            - "./var:/var/www/var"
-            - "./vendor:/var/www/vendor"
-            - ./site.conf:/etc/nginx/conf.d/default.conf
-  php:
-    image: bigm/php-7-fpm
-    volumes:
-          - "./.data/db:/var/lib/mysql"
-          - "./html:/var/www/html"
-          - "./src:/var/www/src"
-          - "./app:/var/www/app"
-          - "./bin:/var/www/bin"
-          - "./var:/var/www/var"
-          - "./vendor:/var/www/vendor"
+      - "80:80"
+
+  eventstore:
+    image: techbot/docker-event
+    ports:
+       - "2113:2113"
 
 
-  phpmyadmin:
-      image: phpmyadmin/phpmyadmin
+
+
+
+
+
+
+

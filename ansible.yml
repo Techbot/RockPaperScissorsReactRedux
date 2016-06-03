@@ -1,0 +1,72 @@
+---
+- hosts: emc23-3
+  gather_facts: no
+  tasks:
+
+  - name: clean
+    raw: apt-get clean
+
+  - name: update
+    raw: apt-get update
+
+  - name: install  python-simplejson
+    raw: apt-get install -qq python-simplejson
+
+- hosts:  emc23-3
+  vars:
+    http_port: 80
+  tasks:
+
+  - name: install transport
+    apt: name={{ item }}
+    with_items:
+      - apt-transport-https
+
+  - name: add key
+    apt_key: keyserver=hkp://p80.pool.sks-keyservers.net:80 id=58118E89F3A912897C070ADBF76221572C52609D
+
+    #- name: add repo
+    # Add specified repository into sources list.
+    #apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-xenial main' state=present
+
+  - name: update apt
+    apt: update_cache=yes
+
+  - name: install docker and dependencies
+    apt: name={{ item }}
+    with_items:
+      - lxc
+      - wget
+      - curl
+      - docker.io
+      - make
+      - python-pip
+
+  - name: Pip
+    pip:
+      name: "{{ item }}"
+    with_items:
+    - setuptools
+    - six
+    - docker-py
+    - ipaddress
+
+  - name: run eventstore servers
+    docker:
+      name: eventstore
+      image: techbot/docker-event
+      state: started
+      ports: 2113:2113
+
+
+  - name: compose download
+    raw: curl -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+
+  - name: chmod
+    raw: chmod +x /usr/local/bin/docker-compose
+
+  - name: copy docker-composefile
+    copy: src=docker-compose.yml dest=~/ owner=root group=root mode=0644
+
+  - name: copy Dockerfile
+    copy: src=Dockerfile dest=~/ owner=root group=root mode=0644

@@ -59,16 +59,14 @@ class DefaultController extends Controller
 
         $this->machineChoice = $game->get_round($playerChoice);
 
-     //   print_r($game->get_round($playerChoice));
-
         $es = new EventStore('http://46.19.33.139:2113');
 
         $events = new WritableEventCollection([
-            WritableEvent::newInstance('round', ['player' => $playerChoice,'machine' => $this->machineChoice]),
+            WritableEvent::newInstance('round', ['player' => $playerChoice, 'machine' => $this->machineChoice]),
 
         ]);
         $es->writeToStream('RockPaperScissors', $events);
 
-        return new Response( json_encode([$this->machineChoice,$playerChoice]));
+        return new Response( json_encode([$events]));
     }
 }
