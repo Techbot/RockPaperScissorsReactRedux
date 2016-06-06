@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rob
- * Date: 18/04/2016
- * Time: 09:15
- */
-
 namespace Battle;
 
 class Game
@@ -40,6 +33,54 @@ class Game
             $this->player->setHealth($this->player->getHealth() - 10);
 
         }
+       
         return $this->machineChoice;
     }
+
+
+    /**
+     * @param $playerChoice
+     * @return array
+     */
+    public function buy($playerChoice)
+    {
+        $this->player->choice = $playerChoice;
+
+        
+        if (  $this->player->choice ===0){
+        $paper = $paper + 10;
+        $cost = $cost +1 ;    
+            
+        }
+        if (  $this->player->choice ===0){
+            $paper = $paper + 10;
+            $cost = $cost +1 ;
+
+        }
+
+        if (  $this->player->choice ===0){
+            $paper = $paper + 10;
+            $cost = $cost +1 ;
+
+        }       
+        
+        
+        
+        if (  $this->player->choice < $this->machineChoice) {
+
+            $this->player->setHealth($this->player->getHealth() - 10);
+
+        }
+
+        return $this->machineChoice;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

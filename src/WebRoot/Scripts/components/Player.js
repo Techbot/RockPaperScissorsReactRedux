@@ -4,7 +4,7 @@ import React from 'react';
 var Player = React.createClass( {
     render(){
 
-        const { player_rocks, player_papers, player_scissors, player_score,player_health} = this.props;
+        const { player_rocks, player_papers, player_scissors, player_score, player_health} = this.props;
 
 
         return (

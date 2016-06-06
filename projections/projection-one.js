@@ -1,21 +1,19 @@
 fromStream("RockPaperScissors")
     .when({
-        $init: function() {
+        $init: function () {
             return {
-             player_rocks :10,
-             player_papers:10,
-             player_scissors :10,
-             machine_rocks:10,
-             machine_papers :10,
-             machine_scissors :10,
-             machineChoice :10,
-             myChoice:1,
-             count: 0
+                player_rocks: 10,
+                player_papers: 10,
+                player_scissors: 10,
+                machine_rocks: 10,
+                machine_papers: 10,
+                machine_scissors: 10,
+                count: 0
             }
         },
-        "round": function(state, event) {
+        "round": function (state, event) {
 
-            switch (event.player) {
+            switch (event.data.playerChoice) {
                 case 0:
                     state.player_rocks--;
                     break;
@@ -27,7 +25,7 @@ fromStream("RockPaperScissors")
                     break;
             }
 
-            switch (event.machine) {
+            switch (event.data.machineChoice) {
                 case 0:
                     state.machine_rocks--;
                     break;
@@ -38,7 +36,9 @@ fromStream("RockPaperScissors")
                     state.machine_scissors--;
                     break;
             }
+
             state.count += 1
             return state
-        }
+        },
+
     })

@@ -51,14 +51,6 @@
     - docker-py
     - ipaddress
 
-  - name: run eventstore servers
-    docker:
-      name: eventstore
-      image: techbot/docker-event
-      state: started
-      ports: 2113:2113
-
-
   - name: compose download
     raw: curl -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 

@@ -1,11 +1,5 @@
 <?php
 namespace Battle;
-/**
- * Created by PhpStorm.
- * User: techbot
- * Date: 16-3-16
- * Time: 21:30
- */
 class Npc
 {
     private $strength;
@@ -14,7 +8,7 @@ class Npc
 
     public function __construct()
     {
-        $this->dice = new Dice();
+        //$this->dice = new Dice();
         $this->health = 100;
         $this->strength = 10;
     }
@@ -51,7 +45,7 @@ class Npc
 
     public function choose()
     {
-        return rand(1,3);
+        return rand(0,2);
     }
 
 }

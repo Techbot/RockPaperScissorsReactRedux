@@ -12,18 +12,21 @@ var machineChoice=0;
 var myChoice=1;
 // Action:
 var increaseAction = {type: 'increase'};
-var compareAction ={type: 'compare',machineChoice:machineChoice};
+var compareAction ={type: 'compare', machineChoice:machineChoice};
 
 $.ajax({
-    url: "http://46.19.33.139:2113/projection/five/state"
+    url: "http://46.19.33.139:2113/projection/one/state"
 
 }).done(function(result) {
-    initialState.player_rocks = result['Player_Rocks'];
-    initialState.player_papers = result['Player_Papers'];
-    initialState.player_scissors = result['Player_Scissors'];
-    initialState.machine_rocks = result['Machine_Rocks'];
-    initialState.machine_papers = result['Machine_Papers'];
-    initialState.machine_scissors = result['Machine_Scissors'];
+    
+    console.log(result);
+     
+    initialState.player_rocks = result['player_rocks'];
+    initialState.player_papers = result['player_papers'];
+    initialState.player_scissors = result['player_scissors'];
+    initialState.machine_rocks = result['machine_rocks'];
+    initialState.machine_papers = result['machine_papers'];
+    initialState.machine_scissors = result['machine_scissors'];
     initialState.machineChoice = machineChoice;
     initialState.myChoice = 1;
 // Store:
@@ -127,9 +130,7 @@ function counter(state = initialState
             }
 
             if (myChoice==machineChoice) {
-
                 //do nothing yet
-
             }
 
             if (myChoice == 0){
