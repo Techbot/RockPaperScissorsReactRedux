@@ -11,6 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use League\Tactician\CommandBus;
+use League\Tactician\Handler\Locator\InMemoryLocator;
+use League\Tactician\Handler\CommandHandlerMiddleware;
+use League\Tactician\Handler\MethodNameInflector\HandleInflector;
+use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
+
 class DefaultController extends Controller
 {
     public $machineChoice;
@@ -50,12 +56,14 @@ class DefaultController extends Controller
 
         $game = new Game();
 
-        $this->machineChoice = $game->get_round($playerChoice);
+        $this->machineChoice = $game->get_machineChoice();
 
+        
+        
         $es = new EventStore('http://46.19.33.139:2113');
 
         $events = new WritableEventCollection([
-            WritableEvent::newInstance('round', ['player' => $this->user->getId(),'playerChoice' => $playerChoice, 'machineChoice' => $this->machineChoice]),
+            WritableEvent::newInstance('round', ['player' => $this->user->getId(),'playerChoice' => $playerChoice, 'machineChoice' => $this->machineChoice, 'result'=>$result]),
 
         ]);
         $es->writeToStream('RockPaperScissors', $events);
@@ -89,7 +97,13 @@ class DefaultController extends Controller
         return new Response( json_encode([$playerChoice]));
     }
 
+    /**
+     * @Route("/myid", name="myId")
+     * @return Response
+     */
 
-
-
+    public function getMyID()
+    {
+        return new Response( json_encode([ $this->getUser()->getId()]));
+    }
 }

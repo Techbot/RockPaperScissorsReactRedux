@@ -1,4 +1,4 @@
 fromStream('RockPaperScissors')
-    .whenAny(function(state, ev) {
-        linkTo('player-' + ev.data.id, ev)
+    .whenAny(function(state, event) {
+        linkTo('player-' + event.data.player, event)
     })

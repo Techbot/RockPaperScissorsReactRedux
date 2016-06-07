@@ -37,12 +37,9 @@ class Player
         $this->health = $health;
     }
 
-    public function getAttack()
-    {
-        return $this->strength + $this->dice->rollDice();
-    }
 
-    public function choose()
+
+    public function rolldice()
     {
         return $this->dice->rollDice();
     }
