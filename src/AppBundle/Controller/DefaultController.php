@@ -81,7 +81,8 @@ class DefaultController extends Controller
         $this->playerChoice = (int)$request->query->get('choice');
 
         $this->machineChoice = $this->get_machineChoice();
-        
+     
+        //this would be localhost
         $es = new EventStore('http://46.19.33.139:2113');
 
         $result = $this->compare();
