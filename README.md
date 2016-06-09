@@ -6,9 +6,10 @@ TDD and BDD practices used when possible (based on my limited knowledge).
 
 In Progress: Partitioning event stream perUser
 
-Next: Introduce Command Bus , refactor
+Next: 
+refactor to introduce Tactician Command Bus and Hexagonal Design
 
-Steps:
+##Steps:
  1) Create clean 16.4 Ubuntu server
  
  2) Ansible Script will create a server ready to use docker compose whuich is uploaded to the ~/ directory
@@ -16,24 +17,28 @@ Steps:
  3) login to server : docker-compose up
 
 
-Docker Compose Installs
+##Docker Compose Installs
 Techbot/Rock-Paper-Sciccors
 Mysql
 PHP7
 EventStore
 
-to do:
+##to do:
 PhpyMyadmin
 
-Frontend uses gulp,babel and webpack
+##Frontend uses 
+gulp, 
+babel 
+webpack
+react/redux
 
-Process to date is
+##Process to date is
 BDD: RPS features are setup with Behat. The Dice context is not being used at present, but I'm keeping it in to display two contexts in action
 
 Simple Bundle created to link to FosUser and write to Javascript Functional Event Store
 Event Store Projections read events split based on Fosuser and return state 
 (being number of Rocks Papers and Scissors remaining).
 
-UnitTests: I've broken everything temporarily.
+##UnitTests: 
+I've broken everything temporarily.
 
-Currently refactoring to introduce Tactician Command Bus and Hexagonal Design
