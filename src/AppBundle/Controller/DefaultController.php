@@ -2,7 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use Battle\Game;
+use Battle\Player;
+use Battle\Npc;
 use EventStore\EventStore;
 use EventStore\WritableEvent;
 use EventStore\WritableEventCollection;
@@ -19,10 +20,35 @@ use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 
 class DefaultController extends Controller
 {
-    public $machineChoice;
-   
+    private $machineChoice;
+    private $playerChoice;   
     private $user;
-    
+    private $player;
+    private $machine;
+
+    function __construct()
+    {
+        $this->player = new Player();
+        $this->machine = new Npc();
+    }
+
+    /**
+     * @return int
+     */
+    public function get_machineChoice()
+    {
+        $this->machineChoice  = $this->machine->choose();
+    }
+
+    public function compare(){
+        if (  $this->playerChoice > $this->machineChoice){
+            return 'win';
+        }
+        if (  $this->playerChoice < $this->machineChoice) {
+            return 'lose';
+        }
+        return 'draw';
+    }
 
     /**
      * @Route("/", name="homepage")
@@ -52,49 +78,21 @@ class DefaultController extends Controller
     {  
         $this->user = $this->getUser();
 
-        $playerChoice = (int)$request->query->get('choice');
+        $this->playerChoice = (int)$request->query->get('choice');
 
-        $game = new Game();
-
-        $this->machineChoice = $game->get_machineChoice();
-
-        
+        $this->machineChoice = $this->get_machineChoice();
         
         $es = new EventStore('http://46.19.33.139:2113');
 
+        $result = $this->compare();
+        
         $events = new WritableEventCollection([
-            WritableEvent::newInstance('round', ['player' => $this->user->getId(),'playerChoice' => $playerChoice, 'machineChoice' => $this->machineChoice, 'result'=>$result]),
+            WritableEvent::newInstance('round', ['player' => $this->user->getId(),'playerChoice' => $this->playerChoice, 'machineChoice' => $this->machineChoice, 'result'=>$result]),
 
         ]);
         $es->writeToStream('RockPaperScissors', $events);
 
-        return new Response( json_encode([$this->machineChoice, $playerChoice, $this->user->getId()]));
-    }
-
-    /**
-     * @param Request $request
-     * @Route("/buy", name="homepage3")
-     * @return Response
-     * @throws \EventStore\Exception\WrongExpectedVersionException
-     */
-
-    public function writeToStore2(Request $request)
-    {
-        $playerChoice = (int)$request->query->get('choice');
-
-        $game = new Game();
-
-        $game->buy($playerChoice);
-
-        $es = new EventStore('http://46.19.33.139:2113');
-
-        $events = new WritableEventCollection([
-            WritableEvent::newInstance('buy', ['player' => $this->user,'playerChoice' => $playerChoice]),
-
-        ]);
-        $es->writeToStream('Products_Bought', $events);
-
-        return new Response( json_encode([$playerChoice]));
+        return new Response( json_encode([$this->machineChoice, $this->playerChoice, $this->user->getId()]));
     }
 
     /**
