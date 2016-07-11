@@ -28,8 +28,8 @@ class DefaultController extends Controller
 
     function __construct()
     {
-        $this->player = new Player();
-        $this->machine = new Npc();
+        //$this->player = new Player();
+        //$this->machine = new Npc();
     }
 
     /**

@@ -25,61 +25,49 @@ class PRSContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
 
-        $this->dice = new Dice();
-        $this->dice2 = new Dice();
-        $this->npc = new Npc();
-        $this->player = new Player();
+    
     }
+
+
 
     /**
      * @Given a new Game
      */
     public function aNewGame()
     {
-       $this->game = new \Battle\Game();
-    }
-
-
-
-
-
-
-    /**
-     * @Given NPC chose :arg1
-     */
-    public function npcChose()
-    {
-        return  $this->npc->choose();
+        throw new PendingException();
     }
 
     /**
      * @When I chose :arg1
      */
-    public function iChose()
+    public function iChose($arg1)
     {
-        return  $this->player->choose();
+        throw new PendingException();
+    }
+
+    /**
+     * @When NPC chose :arg1
+     */
+    public function npcChose($arg1)
+    {
+        throw new PendingException();
     }
 
     /**
      * @When NPC health is :arg1
      */
-    public function npcHealthIs()
+    public function npcHealthIs($arg1)
     {
-        return  $this->npc->getHealth();
+        throw new PendingException();
     }
 
     /**
-     * @Then NPC health should be reduced to :health
+     * @Then NPC health should be reduced to :arg1
      */
-    public function npcHealthShouldBeReducedTo($health)
+    public function npcHealthShouldBeReducedTo($arg1)
     {
-
-        $this->npc->setHealth($this->npc->getHealth() - 10);
-
-        Assert::assertEquals($health, $this->npc->getHealth());
-
-
-
+        throw new PendingException();
     }
 
     /**
@@ -87,16 +75,15 @@ class PRSContext implements Context, SnippetAcceptingContext
      */
     public function myHealthIs($arg1)
     {
-        $this->player->getHealth($arg1);
+        throw new PendingException();
     }
 
     /**
-     * @Then my health should be reduced to :health
+     * @Then my health should be reduced to :arg1
      */
-    public function myHealthShouldBeReducedTo($health)
+    public function myHealthShouldBeReducedTo($arg1)
     {
-        $this->player->setHealth($this->player->getHealth() -10 );
-        Assert::assertEquals($health, $this->player->getHealth());
+        throw new PendingException();
     }
 
     /**
@@ -104,19 +91,15 @@ class PRSContext implements Context, SnippetAcceptingContext
      */
     public function npcHasHealthOf($arg1)
     {
-        $this->npc->getHealth($arg1);
+        throw new PendingException();
     }
 
     /**
-     * @Then NPC health should be :health
+     * @Then NPC health should be :arg1
      */
-    public function npcHealthShouldBe($health)
+    public function npcHealthShouldBe($arg1)
     {
-
-        Assert::assertEquals($health, $this->npc->getHealth());
-
-
-
+        throw new PendingException();
     }
 
     /**
@@ -124,7 +107,7 @@ class PRSContext implements Context, SnippetAcceptingContext
      */
     public function iHaveHealthOf($arg1)
     {
-        $this->npc->getHealth($arg1);
+        throw new PendingException();
     }
 
     /**
@@ -132,7 +115,6 @@ class PRSContext implements Context, SnippetAcceptingContext
      */
     public function myHealthShouldBe($arg1)
     {
-        $this->npc->getHealth($arg1);
+        throw new PendingException();
     }
-
 }
