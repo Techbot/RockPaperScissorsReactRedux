@@ -21,7 +21,7 @@ use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 class DefaultController extends Controller
 {
     private $machineChoice;
-    private $playerChoice;   
+    private $playerChoice;
     private $user;
     private $player;
     private $machine;
@@ -37,14 +37,15 @@ class DefaultController extends Controller
      */
     public function get_machineChoice()
     {
-        $this->machineChoice  = $this->machine->choose();
+        $this->machineChoice = $this->machine->choose();
     }
 
-    public function compare(){
-        if (  $this->playerChoice > $this->machineChoice){
+    public function compare()
+    {
+        if ($this->playerChoice > $this->machineChoice) {
             return 'win';
         }
-        if (  $this->playerChoice < $this->machineChoice) {
+        if ($this->playerChoice < $this->machineChoice) {
             return 'lose';
         }
         return 'draw';
@@ -56,17 +57,33 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $this->user = $this->getUser();
-        
-         if ($this->user!=null) {
+
+        if ($this->user != null) {
+            $userManager = $this->get('fos_user.user_manager');
+            $users = $userManager->findUsers();
+
             return $this->render('default/index.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
+                'users' => $users
+
             ]);
-        }else{
+        } else {
+
+            if ($this->user->getGameStatus = null) {
+                $es = new EventStore('http://46.19.33.139:2113');
+
+                $events = new WritableEventCollection([
+                    WritableEvent::newInstance('init', ['player' => $this->user->getId()])
+                ]);
+                $es->writeToStream('RockPaperScissors', $events);
+            }
+
             return $this->render('default/home.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
             ]);
         }
     }
+
     /**
      * @param Request $request
      * @Route("/round", name="homepage2")
@@ -74,26 +91,26 @@ class DefaultController extends Controller
      * @throws \EventStore\Exception\WrongExpectedVersionException
      */
 
-    public function writeToStore(Request $request)
-    {  
+    public function round(Request $request)
+    {
         $this->user = $this->getUser();
 
         $this->playerChoice = (int)$request->query->get('choice');
 
         $this->machineChoice = $this->get_machineChoice();
-     
+
         //this would be localhost
         $es = new EventStore('http://46.19.33.139:2113');
 
         $result = $this->compare();
-        
+
         $events = new WritableEventCollection([
-            WritableEvent::newInstance('round', ['player' => $this->user->getId(),'playerChoice' => $this->playerChoice, 'machineChoice' => $this->machineChoice, 'result'=>$result]),
+            WritableEvent::newInstance('round', ['player' => $this->user->getId(), 'playerChoice' => $this->playerChoice, 'machineChoice' => $this->machineChoice, 'result' => $result]),
 
         ]);
         $es->writeToStream('RockPaperScissors', $events);
 
-        return new Response( json_encode([$this->machineChoice, $this->playerChoice, $this->user->getId()]));
+        return new Response(json_encode([$this->machineChoice, $this->playerChoice, $this->user->getId()]));
     }
 
     /**
@@ -103,6 +120,6 @@ class DefaultController extends Controller
 
     public function getMyID()
     {
-        return new Response( json_encode([ $this->getUser()->getId()]));
+        return new Response(json_encode([$this->getUser()->getId()]));
     }
 }
