@@ -12,30 +12,35 @@ Feature: Rock Paper Scissors Battle
 
   Scenario: Player attack is greater than NPC attack
     Given a new Game
-    When I chose 2
+    When Player chose 2
     And NPC chose 1
+    And a round is played
     Then Player Score should be increased by 1
 
   Scenario: Player attack is less than NPC attack
     Given a new Game
     When Player chose 0
     And NPC chose 1
+    And a round is played
     Then Player score should be reduced  by 1
 
   Scenario: Player attack is equal than NPC attack
     Given a new Game
     When Player chose 0
     And NPC chose 0
+    And a round is played
     Then my score should stay the same
 
   Scenario: Player attack is 0  and NPC attack is 2
     Given a new Game
     When Player chose 0
     And NPC chose 2
+    And a round is played
     Then my score should increase by 1
 
   Scenario: Player attack is 2  and NPC attack is 1
     Given a new Game
     When Player chose 2
     And NPC chose 0
+    And a round is played
     Then Player score should be reduced  by 1

@@ -4,4 +4,4 @@ default:
     suites:
         RPS_features:
             paths:    [ %paths.base%/tests/Acceptance/features/RPS ]
-            contexts: [ RPSContext ]
+contexts: [ RPSContext ]
