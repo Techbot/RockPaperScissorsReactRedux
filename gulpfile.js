@@ -3,7 +3,6 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     cssmin = require('gulp-cssmin');
-
 var webpack = require('webpack-stream');
 
 /*
@@ -21,8 +20,6 @@ gulp.task('site-copy-scripts', function() {
 
 gulp.task('site-design', function() {
     gulp.src([
-
-
             'src/Webroot/Styles/bootstrap.min.css',
             'src/Webroot/Styles/bootstrap-theme.min.css',
             'src/Webroot/Styles/font-awesome.min.css',

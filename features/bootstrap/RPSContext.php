@@ -35,7 +35,7 @@ class PRSContext implements Context, SnippetAcceptingContext
      */
     public function aNewGame()
     {
-        throw new PendingException();
+     $this->game = new Game();
     }
 
     /**

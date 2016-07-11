@@ -2,10 +2,6 @@
 
 default:
     suites:
-        Dice_features:
-            paths:    [ %paths.base%/features/Dice ]
-            contexts: [ DiceContext ]
-
-        PRS_features:
-            paths:    [ %paths.base%/features/RPS ]
-            contexts: [ PRSContext ]
+        RPS_features:
+            paths:    [ %paths.base%/tests/Acceptance/features/RPS ]
+            contexts: [ RPSContext ]

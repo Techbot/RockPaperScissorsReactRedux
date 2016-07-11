@@ -16,10 +16,13 @@ services:
     ports:
       - "80:80"
 
-  eventstore:
-    image: techbot/docker-event
+  store:
+    image: techbot/eventstore
     ports:
        - "2113:2113"
+    external_links:
+     - data
+
 
 
 
