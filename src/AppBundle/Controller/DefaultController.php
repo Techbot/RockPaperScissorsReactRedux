@@ -56,21 +56,30 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $userManager = $this->get('fos_user.user_manager');
         $this->user = $this->getUser();
 
-        if ($this->user != null) {
-
+        if ($this->user == null) {
+            $userManager = $this->get('fos_user.user_manager');
             $users = $userManager->findUsers();
 
-            return $this->render('default/index.html.twig', [
+            return $this->render('default/home.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
                 'users' => $users
 
             ]);
         } else {
 
-            if ($this->user->getGameStatus = null) {
+            //trigger exception in a "try" block
+            try {
+                $this->checkNotNull($this->user->getGameStatus());
+                //If the exception is thrown, this text will not be shown
+                echo 'If you see this, the player is set';
+            }
+            //catch exception
+            catch(Exception $e) {
+                echo 'Message: ' .$e->getMessage();
+            }
+
                 $es = new EventStore('http://46.19.33.139:2113');
 
                 $events = new WritableEventCollection([
@@ -80,15 +89,24 @@ class DefaultController extends Controller
 
                 $this->user->setGameStatus(1);
 
+                $userManager = $this->get('fos_user.user_manager');
                 $userManager->updateUser($this->user);
 
-                //$this->getDoctrine()->getManager()->flush();
-                $userManager->flush();
-            }
+                $this->getDoctrine()->getManager()->flush();
+                //$userManager->flush();
 
-            return $this->render('default/home.html.twig', [
+
+
+            return $this->render('default/index.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
             ]);
+        }
+    }
+
+
+    public function checkNotNull(){
+        if ($this->user->getGameStatus() === null){
+            throw new \Exception("Value must be object at this point");
         }
     }
 
@@ -130,6 +148,6 @@ class DefaultController extends Controller
 
     public function getMyID()
     {
-        return new Response(json_encode([$this->getUser()->getId()]));
+        return new Response(json_encode($this->getUser()->getId() ? $this->getUser()->getId() : 0));
     }
 }
