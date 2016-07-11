@@ -56,10 +56,11 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $userManager = $this->get('fos_user.user_manager');
         $this->user = $this->getUser();
 
         if ($this->user != null) {
-            $userManager = $this->get('fos_user.user_manager');
+
             $users = $userManager->findUsers();
 
             return $this->render('default/index.html.twig', [
@@ -76,6 +77,13 @@ class DefaultController extends Controller
                     WritableEvent::newInstance('init', ['player' => $this->user->getId()])
                 ]);
                 $es->writeToStream('RockPaperScissors', $events);
+
+                $this->user->setGameStatus(1);
+
+                $userManager->updateUser($this->user);
+
+                //$this->getDoctrine()->getManager()->flush();
+                $userManager->flush();
             }
 
             return $this->render('default/home.html.twig', [
@@ -109,6 +117,8 @@ class DefaultController extends Controller
 
         ]);
         $es->writeToStream('RockPaperScissors', $events);
+
+
 
         return new Response(json_encode([$this->machineChoice, $this->playerChoice, $this->user->getId()]));
     }

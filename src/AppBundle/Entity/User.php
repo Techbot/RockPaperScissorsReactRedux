@@ -19,6 +19,12 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\gamestatus
+     * @ORM\Column(type="integer")
+     */
+    protected $gameStatus;
+    
     public function __construct()
     {
         parent::__construct();
@@ -32,5 +38,25 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getGameStatus()
+    {
+        return $this->gameStatus;
+    }
+
+    /**
+     * set id
+     *
+     * @return integer
+     */
+    public function setGameStatus($gameStatus)
+    {
+        $this->gameStatus= $gameStatus;
     }
 }

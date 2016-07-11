@@ -62,7 +62,6 @@ class FeatureContext implements Context, SnippetAcceptingContext
         $this->oldScore = $this->player->getScore();
         $result = $this->game->round($this->player->getChoice(), $this->machine->getChoice());
         $this->player->setScore($this->game->retrieveScore($this->oldScore, $result));
-
     }
 
     /**

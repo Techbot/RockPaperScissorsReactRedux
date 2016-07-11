@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div id="root" ></div>
+    <div id="root" >
+        <h1>Top 100 Players</h1>
+        {% for user in users %}
+            <li>{{ user.username|e }}</li>
+        {% endfor %}</div>
 
-    You need to log in to play
+    You need to <a href ='login/'>log in</a> to play
 
 {% endblock %}
 

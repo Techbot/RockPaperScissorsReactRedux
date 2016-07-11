@@ -1,7 +1,7 @@
 fromCategory('player')
     .foreachStream()
     .when({
-        "$init": function(state, event) {
+        "init": function(state, event) {
             return {
                 player_rocks: 10,
                 player_papers: 10,
