@@ -23,28 +23,27 @@ class FeatureContext implements Context, SnippetAcceptingContext
     private $game;
     private $machine;
     private $oldScore;
-    
+
     public function __construct()
     {
         $this->player = new Player();
         $this->machine = new Machine();
     }
 
-
     /**
      * @Given a new Game
      */
     public function aNewGame()
     {
-       $this->game = new Game();
+        $this->game = new Game();
     }
 
     /**
-     * @When I chose :weapon
+     * @When Player chose :weapon
      */
     public function playerChose($weapon)
     {
-        $this->player->setChoice( $weapon);
+        $this->player->setChoice($weapon);
     }
 
     /**
@@ -52,7 +51,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function npcChose($npcWeapon)
     {
-       $this->machine->setChoice($npcWeapon);
+        $this->machine->setChoice($npcWeapon);
     }
 
     /**
@@ -61,21 +60,17 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function aRoundIsPlayed()
     {
         $this->oldScore = $this->player->getScore();
-        
         $result = $this->game->round($this->player->getChoice(), $this->machine->getChoice());
+        $this->player->setScore($this->game->retrieveScore($this->oldScore, $result));
 
-        $this->player->setScore( $this->game->retrieveScore( $this->oldScore,$result));
-        
     }
+
     /**
      * @Then Player Score should be increased by :score
      */
     public function playerScoreShouldBeIncreasedBy($score)
     {
-        echo $this->player->getScore();
-        echo $this->oldScore + $score; 
-
-        Assert::assertTrue(  $this->player->getScore() == $this->oldScore + $score);
+        Assert::assertTrue($this->player->getScore() == $this->oldScore + $score);
     }
 
     /**
@@ -83,32 +78,14 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function playerScoreShouldBeReducedBy($score)
     {
-        Assert::assertTrue(  $this->player->getScore() == $this->oldScore - $score);
+        Assert::assertTrue($this->player->getScore() == $this->oldScore - $score);
     }
 
     /**
-     * @Then my score should stay the same
+     * @Then Player score should stay the same
      */
-    public function myScoreShouldStayTheSame()
+    public function playerScoreShouldStayTheSame()
     {
-        throw new PendingException();
+        Assert::assertTrue($this->player->getScore() == $this->oldScore);
     }
-
-    /**
-     * @Then my score should increase by :arg1
-     */
-    public function myScoreShouldIncreaseBy($arg1)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @When Player chose :weapon
-     */
-    public function playerChose2($weapon)
-    {
-        $this->playerChoice = $weapon;
-    }
-
-
 }

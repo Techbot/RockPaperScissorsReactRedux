@@ -6,15 +6,20 @@ class Game
 {
     public function round($playerChoice, $npcChoice)
     {
-        if ($playerChoice > $npcChoice || ($playerChoice == 0 && $npcChoice == 2)) {
+        if ($playerChoice == 2 && $npcChoice == 0) {
+            return 'lose';
+        }
+
+        if ($playerChoice == 0 && $npcChoice == 2) {
             return 'win';
         }
 
-        if ($playerChoice < $npcChoice || ($playerChoice == 2 && $npcChoice == 0)) {
-           
-           echo 'lose';
-           
+        if ($playerChoice < $npcChoice) {
             return 'lose';
+        }
+
+        if ($playerChoice > $npcChoice) {
+            return 'win';
         }
         return 'draw';
     }
@@ -27,8 +32,6 @@ class Game
 
         if ($result == 'lose') {
             $playerScore--;
-            
-            echo 'lose';
         }
         return $playerScore;
     }

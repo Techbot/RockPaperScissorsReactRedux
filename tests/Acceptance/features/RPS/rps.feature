@@ -29,14 +29,14 @@ Feature: Rock Paper Scissors Battle
     When Player chose 0
     And NPC chose 0
     And a round is played
-    Then my score should stay the same
+    Then Player score should stay the same
 
   Scenario: Player attack is 0  and NPC attack is 2
     Given a new Game
     When Player chose 0
     And NPC chose 2
     And a round is played
-    Then my score should increase by 1
+    Then Player Score should be increased by 1
 
   Scenario: Player attack is 2  and NPC attack is 1
     Given a new Game
