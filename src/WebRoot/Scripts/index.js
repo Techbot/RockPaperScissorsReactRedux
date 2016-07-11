@@ -19,78 +19,86 @@ $.when(
         dataType: "json",
         url: 'myid',
         success: function(data) {
-         myId=data[0];
+         myId=data;
+            console.log('id' + myId);
         }
     })
 
-).then( function(){
+).then( function(myId){
+
+    if (myId !=0) {
 
 //     curl -i -H "Accept:application/atom+xml" "http://46.19.33.139:2113/streams/player-2
-    $.ajax({
-        url: "http://46.19.33.139:2113/projection/three/state?partition=player-" + myId,
-    }).done(function(result) {
-        console.log(result);
-        initialState.player_rocks = result['player_rocks'];
-        initialState.player_papers = result['player_papers'];
-        initialState.player_scissors = result['player_scissors'];
-        initialState.machine_rocks = result['machine_rocks'];
-        initialState.machine_papers = result['machine_papers'];
-        initialState.machine_scissors = result['machine_scissors'];
-        initialState.player_score = result['player_score'];       
-        initialState.machineChoice = machineChoice;
-        initialState.myChoice = 1;
+        $.ajax({
+            url: "http://46.19.33.139:2113/projection/three/state?partition=player-" + myId,
+        }).done(function (result) {
+            console.log(result);
+            initialState.player_rocks = result['player_rocks'];
+            initialState.player_papers = result['player_papers'];
+            initialState.player_scissors = result['player_scissors'];
+            initialState.machine_rocks = result['machine_rocks'];
+            initialState.machine_papers = result['machine_papers'];
+            initialState.machine_scissors = result['machine_scissors'];
+            initialState.player_score = result['player_score'];
+            initialState.machineChoice = machineChoice;
+            initialState.myChoice = 1;
 // Store:
-        let store = createStore(counter);
+            let store = createStore(counter);
 
 // Map Redux state to component props
-        function mapStateToProps(state)  {
-            return {
-                value: messages[state.myChoice],
-                value2:messages[state.machineChoice],
-                machineChoice: state.machineChoice,
-                totalScore: state.score,
-                player_rocks: state.player_rocks,
-                player_papers: state.player_papers,
-                player_scissors: state.player_scissors,
-                machine_rocks: state.machine_rocks,
-                machine_papers: state.machine_papers,
-                machine_scissors: state.machine_scissors,
-                machine_score: state.player_score,              
-            };
-        }
+            function mapStateToProps(state) {
+                return {
+                    value: messages[state.myChoice],
+                    value2: messages[state.machineChoice],
+                    machineChoice: state.machineChoice,
+                    totalScore: state.score,
+                    player_rocks: state.player_rocks,
+                    player_papers: state.player_papers,
+                    player_scissors: state.player_scissors,
+                    machine_rocks: state.machine_rocks,
+                    machine_papers: state.machine_papers,
+                    machine_scissors: state.machine_scissors,
+                    machine_score: state.player_score,
+                };
+            }
 
 // Map Redux actions to component props
-        function mapDispatchToProps(dispatch) {
-            return {
-                onIncreaseClick: () => dispatch(increaseAction),
-                onCompareStates: () => {
+            function mapDispatchToProps(dispatch) {
+                return {
+                    onIncreaseClick: () => dispatch(increaseAction),
+                    onCompareStates: () => {
 
-                    $.ajax({
-                        url: "round",
-                        data: {choice:myChoice}
-                    }).done(function(result) {
-                        machineChoice = JSON.parse(result)[0];
-                        console.log (JSON.parse(result)[0] ,myChoice );
-                    });
-                    dispatch(compareAction)
+                        $.ajax({
+                            url: "round",
+                            data: {choice: myChoice}
+                        }).done(function (result) {
+                            machineChoice = JSON.parse(result)[0];
+                            console.log(JSON.parse(result)[0], myChoice);
+                        });
+                        dispatch(compareAction)
+                    }
                 }
             }
-        }
 
 // Connected Component:
 
-        let App = connect(
-            mapStateToProps,
-            mapDispatchToProps
-        )(Counter);
+            let App = connect(
+                mapStateToProps,
+                mapDispatchToProps
+            )(Counter);
 
-        ReactDOM.render(
-            <Provider store={store}  >
-                <App />
-            </Provider>,
-            document.getElementById('root')
-        );
-    });
+            ReactDOM.render(
+                <Provider store={store}>
+                    <App />
+                </Provider>,
+                document.getElementById('root')
+            );
+        });
+    }
+
+
+
+
 });
 
 // Reducer:
