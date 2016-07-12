@@ -5,10 +5,8 @@ namespace Application;
 class Machine
 {
     private $choice;
-
     
     public function __construct(){
-
     }
     
     public function getChoice(){
@@ -18,6 +16,9 @@ class Machine
     {
         $this->choice = $choice;
     }
-
+    
+    public function choose()
+    {
+        return rand(0,2);
+    }
 }
-

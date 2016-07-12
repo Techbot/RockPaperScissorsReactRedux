@@ -6,7 +6,7 @@ fromStream("RockPaperScissors")
             }
         },
         "round": function (state, event) {
-            state.count += 1
-            return state
+            state.count += 1;
+            return state;
         },
-    })
+    });

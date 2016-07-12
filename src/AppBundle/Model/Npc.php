@@ -11,5 +11,4 @@ class Npc
     {
         return rand(0,2);
     }
-
 }

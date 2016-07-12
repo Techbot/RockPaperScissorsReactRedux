@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use Application\Machine;
+use Application\Game;
 use Battle\Player;
 use Battle\Npc;
 use EventStore\EventStore;
@@ -25,30 +27,13 @@ class DefaultController extends Controller
     private $user;
     private $player;
     private $machine;
+    private $game;   
 
     function __construct()
     {
-        //$this->player = new Player();
-        //$this->machine = new Npc();
-    }
-
-    /**
-     * @return int
-     */
-    public function get_machineChoice()
-    {
+        $this->game = new Game();
+        $this->machine = new Machine();
         $this->machineChoice = $this->machine->choose();
-    }
-
-    public function compare()
-    {
-        if ($this->playerChoice > $this->machineChoice) {
-            return 'win';
-        }
-        if ($this->playerChoice < $this->machineChoice) {
-            return 'lose';
-        }
-        return 'draw';
     }
 
     /**
@@ -65,10 +50,8 @@ class DefaultController extends Controller
             return $this->render('default/home.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
                 'users' => $users
-
             ]);
         } else {
-
             //trigger exception in a "try" block
             try {
                 $this->checkNotNull($this->user->getGameStatus());
@@ -76,10 +59,7 @@ class DefaultController extends Controller
                 echo 'If you see this, the player is set';
             }
             //catch exception
-            catch(Exception $e) {
-                echo 'Message: ' .$e->getMessage();
-            }
-
+            catch(\Exception $e) {
                 $es = new EventStore('http://46.19.33.139:2113');
 
                 $events = new WritableEventCollection([
@@ -93,20 +73,17 @@ class DefaultController extends Controller
                 $userManager->updateUser($this->user);
 
                 $this->getDoctrine()->getManager()->flush();
-                //$userManager->flush();
-
-
-
+                echo 'Message: ' .$e->getMessage();
+             }
             return $this->render('default/index.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
             ]);
         }
     }
 
-
     public function checkNotNull(){
         if ($this->user->getGameStatus() === null){
-            throw new \Exception("Value must be object at this point");
+            throw new \Exception("Gamestatus must be set at this point");
         }
     }
 
@@ -120,25 +97,18 @@ class DefaultController extends Controller
     public function round(Request $request)
     {
         $this->user = $this->getUser();
-
         $this->playerChoice = (int)$request->query->get('choice');
-
-        $this->machineChoice = $this->get_machineChoice();
-
         //this would be localhost
         $es = new EventStore('http://46.19.33.139:2113');
-
-        $result = $this->compare();
-
+        $result = $this->game->round($this->playerChoice, $this->machineChoice);
         $events = new WritableEventCollection([
             WritableEvent::newInstance('round', ['player' => $this->user->getId(), 'playerChoice' => $this->playerChoice, 'machineChoice' => $this->machineChoice, 'result' => $result]),
-
         ]);
-        $es->writeToStream('RockPaperScissors', $events);
 
-
-
-        return new Response(json_encode([$this->machineChoice, $this->playerChoice, $this->user->getId()]));
+        if ($es->writeToStream('RockPaperScissors', $events)) {
+            return new Response(json_encode([$this->machineChoice, $this->playerChoice, $this->user->getId()]));
+        }
+        return new Response(json_encode(['write fail']));
     }
 
     /**

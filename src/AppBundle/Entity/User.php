@@ -20,7 +20,6 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\gamestatus
      * @ORM\Column(type="integer")
      */
     protected $gameStatus;
@@ -59,4 +58,23 @@ class User extends BaseUser
     {
         $this->gameStatus= $gameStatus;
     }
+    /**
+     *
+     * @var string
+     *
+     * @ORM\Column(name="hobby", type="string")
+     */
+    protected $hobby;
+
+
+
+
+
+
+
+
+
+
+
+
 }
