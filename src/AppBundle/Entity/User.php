@@ -20,7 +20,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true))
      */
     protected $gameStatus;
     
@@ -62,19 +62,8 @@ class User extends BaseUser
      *
      * @var string
      *
-     * @ORM\Column(name="hobby", type="string")
+     * @ORM\Column(name="hobby", type="string", nullable =true))
      */
     protected $hobby;
-
-
-
-
-
-
-
-
-
-
-
 
 }

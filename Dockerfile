@@ -6,6 +6,9 @@ COPY bin    /var/www/bin
 COPY var    /var/www/var
 COPY vendor /var/www/vendor
 
+
+
+
 EXPOSE 80
 
 RUN docker-php-ext-install pdo pdo_mysql
