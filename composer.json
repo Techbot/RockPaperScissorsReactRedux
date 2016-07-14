@@ -35,7 +35,10 @@
         "behat/behat": "^3.1",
         "phpunit/phpunit": "^5.3",
         "friendsofsymfony/user-bundle" : "dev-master",
-        "phpspec/phpspec": "^2.5"
+        "phpspec/phpspec": "^2.5",
+        "ramsey/uuid": "~2.8",
+        "league/tactician-bundle": "^0.4.1",
+        "league/tactician": "^1.0"
     },
   "config": {
         "bin-dir": "bin/"

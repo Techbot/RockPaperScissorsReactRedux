@@ -52,7 +52,7 @@ class DefaultController extends Controller
                 'users' => $users
             ]);
         } else {
-            //trigger exception in a "try" block
+
             try {
                 $this->checkNotNull($this->user->getGameStatus());
                 //If the exception is thrown, this text will not be shown

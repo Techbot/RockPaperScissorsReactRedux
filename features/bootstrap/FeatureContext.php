@@ -6,11 +6,18 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 Use PHPUnit_Framework_Assert as Assert;
-Use Battle\Dice;
-Use Battle\Npc;
-Use Application\Player;
-Use Application\Game;
-Use Application\Machine;
+use Application\Domain\Player;
+use Application\Domain\Machine;
+Use Application\Domain\Game;
+Use Application\Domain\GameId;
+Use Application\CreateGame;
+Use Application\CreateGameHandler;
+Use Application\Infrastructure\Repositories\InMemoryGameRepository;
+use League\Tactician\CommandBus;
+use League\Tactician\Handler\Locator\InMemoryLocator;
+use League\Tactician\Handler\CommandHandlerMiddleware;
+use League\Tactician\Handler\MethodNameInflector\HandleInflector;
+use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 /**
  * Defines application features from the specific context.
  */
@@ -35,7 +42,25 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function aNewGame()
     {
-        $this->game = new Game();
+        $locator = new InMemoryLocator([]);
+        $handlerMiddleware = new CommandHandlerMiddleware(
+            new ClassNameExtractor,
+            $locator,
+            new HandleInflector
+        );
+        $bus = new CommandBus([$handlerMiddleware]);
+
+        //$this->game = new Game(GameId::generate());
+
+        $games = new InMemoryGameRepository();
+        $locator->addHandler(
+            new CreateGameHandler($games),
+            CreateGame::class
+        );
+        $gameId = GameId::generate();
+        $bus->handle(
+            new \Application\CreateGame((string) $gameId)
+        );
     }
 
     /**
