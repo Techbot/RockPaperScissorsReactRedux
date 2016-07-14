@@ -2,7 +2,7 @@
 
 namespace spec\Application;
 
-use Application\Player;
+use Application\Domain\Player;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

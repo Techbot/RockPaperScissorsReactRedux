@@ -4,8 +4,6 @@ namespace Application\Domain;
 use Rhumsaa\Uuid\Uuid;
 use Rhumsaa\Uuid\UuidInterface;
 
-
-
 final class GameId
 {
     /**
