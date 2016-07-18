@@ -1,5 +1,9 @@
 # RockPaperScissorsReactRedux
-Simple RockPaperScissors  React Redux game based on https://github.com/jackielii/simplest-redux-example/
+Simple RockPaperScissors  React Redux game based on several tutorials including
+
+ https://github.com/jackielii/simplest-redux-example/
+ 
+ https://www.sitepoint.com/command-buses-demystified-a-look-at-the-tactician-package/
 
 Idea is to make a game using state and then record these states to event store.
 TDD and BDD practices used when possible (based on my limited knowledge).
